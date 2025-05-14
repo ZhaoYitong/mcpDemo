@@ -9,7 +9,7 @@
 
 ## 快速开始
 <!-- MCP link -->
-[MCP 是什么，怎么回事](https://www.youtube.com/watch?v=_d0duu3dED4)
+[MCP 是什么，怎么回事](http://localhost:8111/video/yt_mcp.mp4)
 
 ## 概念
 MCP （Model Context Protocol，模型上下文协议）定义了应用程序和 AI 模型之间交换上下文信息的方式。这使得开发者能够以一致的方式将各种数据源、工具和功能连接到 AI 模型（一个中间协议层），就像 USB-C 让不同设备能够通过相同的接口连接一样。MCP 的目标是创建一个通用标准，使 AI 应用程序的开发和集成变得更加简单和统一。
@@ -70,11 +70,6 @@ MCP 由三个核心组件构成：Host、Client 和 Server。
 ![arch_detail](img/mcp_detail_visual.jpg)
 
 #### 模型如何选择工具
-
-作者：LastWhisper
-链接：https://zhuanlan.zhihu.com/p/29001189476
-来源：知乎
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 ```python
  async def start(self):
@@ -162,23 +157,25 @@ MCP 由三个核心组件构成：Host、Client 和 Server。
  Arguments:
  {chr(10).join(args_desc)}
 
+```
 
-   @classmethod
-   def from_function(
-      cls,
-      fn: Callable,
-      name: str | None = None,
-      description: str | None = None,
-      context_kwarg: str | None = None,
-   ) -> "Tool":
-      """Create a Tool from a function."""
-      func_name = name or fn.__name__ # 获取函数名
-   ​
-      if func_name == "<lambda>":
-            raise ValueError("You must provide a name for lambda functions")
-   ​
-      func_doc = description or fn.__doc__ or "" # 获取函数 docstring
-      is_async = inspect.iscoroutinefunction(fn)
+``` python
+@classmethod
+def from_function(
+    cls,
+    fn: Callable,
+    name: str | None = None,
+    description: str | None = None,
+    context_kwarg: str | None = None,
+) -> "Tool":
+    """Create a Tool from a function."""
+    func_name = name or fn.__name__ # 获取函数名
+​
+    if func_name == "<lambda>":
+        raise ValueError("You must provide a name for lambda functions")
+​
+    func_doc = description or fn.__doc__ or "" # 获取函数 docstring
+    is_async = inspect.iscoroutinefunction(fn)
       
  ```
 
